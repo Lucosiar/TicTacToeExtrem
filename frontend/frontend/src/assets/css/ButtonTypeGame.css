@@ -1,0 +1,29 @@
+/* src/components/ButtonTypeGame.css   */
+.game-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background-color: #007bff;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .game-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .game-button-image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+    border-radius: 50%;
+  }
+  
+  .game-button-title {
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+  }

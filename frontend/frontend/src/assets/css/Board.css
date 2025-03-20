@@ -1,0 +1,72 @@
+/* Game9x9.jsx */
+.game {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 90vh;
+  font-size: 40px;
+}
+
+/* Board.jsx */
+.board {
+  display: flex;
+  flex-wrap: wrap;
+  width: fit-content;
+  margin-top: 10px;
+  max-width: 546px;
+}
+
+/* MiniBoard.jsx */
+.mini-board {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid black;
+  background: white;
+  width: 180px;
+  height: 180px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.board-row {
+  display: flex;
+}
+
+.overlay{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 90%;
+  /*background-color: #fc5800;*/
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 200px;
+  font-weight: bold;
+}
+
+
+/* Square.jsx */
+.square {
+  width: 60px;
+  height: 60px;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border: 2px solid #fc5800;
+  background: #383737;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.square:hover {
+  background: #0d00ff;
+}

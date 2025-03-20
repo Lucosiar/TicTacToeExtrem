@@ -1,0 +1,10 @@
+.tictactoe-3d-container {
+    width: 100vw;
+    height: 100vh;
+    background-color: #1b50b9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+  
