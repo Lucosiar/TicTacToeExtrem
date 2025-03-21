@@ -1,0 +1,61 @@
+FRONT -> frontend/frontend
+BACK -> backend/backend
+
+# 2 Juegos diferentes del 3 en Raya
+## Sobre el proyecto
+3 modalidades diferentes del 3 en raya
+
+## Vídeo
+Vídeo en gif
+
+## Como usarlo
+Puedes escoger entre 9x9 y 3D.
+
+## Tecnologías usadas
+Front -> React con Vite
+Back -> Django con Python
+
+## Como instalarlo y ejecutar
+Es necesario iniciar por separado, el front por un lado y por el otro el backend. Esta predefinida la url "http://127.0.0.1:8000/" 
+para el backend y "http://localhost:5173" para el frontend.
+
+### Backend
+1. Clona este repositorio:
+
+        git clone
+
+2. Navega al directorio del proyecto:
+
+        cd backend
+
+3. Crea y activa un entorno virtual:
+
+        Windows: python -m venv venv
+        Mac/Linux: python3 -m venv venv
+
+        Windows: venv\Scripts\activate
+        Max/Linux: source venv/bin/activate
+   
+4. Instale las dependencias: (hacer requirements.txt)
+
+        Windows: pip install -r requirements.txt
+        Linux/Mac: pip install -r requirements.txt
+        
+5. Ejecuta el servidor Django:
+
+        python manage.py runserver
+
+### Frontend
+1. Navega hasta el directorio del proyecto:
+        cd frontend
+
+2. Ejecuta el servidor de React
+        npm run de
+
+3. Verifica la url
+Te saldrá algo como esto una vez que ejecutes el proyecto:
+
+        Local:   http://localhost:5173/
+
+## Directrices de contribución
+¡Siéntase libre de contribuir a este proyecto! Cree un pull request con los cambios o mejoras que propone.😊💕
