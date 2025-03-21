@@ -1,6 +1,6 @@
 from django.urls import path
-from .views import get_board
+from .views import ai_move
 
 urlpatterns = [
-    path('game/', get_board, name='get_board'),
+    path('ai_move/', ai_move, name='ai_move'),
 ]

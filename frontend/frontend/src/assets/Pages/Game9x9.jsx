@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect  } from 'react';
+import axios from 'axios';
 import Board from '../components/Board';
 import GameStatus from '../components/GameStatus';
+import ScoreBoard from '../components/ScoreBoard';
 import '../css/Board.css';
 
 const Game9x9 = () => {
@@ -11,10 +13,12 @@ const Game9x9 = () => {
     winners: Array(9).fill(null),
     xIsNext: true,
     currentBoard: null,
+    isSinglePlayer: false,
+    score: {X: 0 , O: 0},
   });
 
-  // Estado para 1 o 2 jugadores
   const [isSinglePlayer, setIsSinglePlayer] = useState(true);
+  const [winnerMessage, setWinnerMessage] = useState(null);
 
   const checkWinner = (squares) => {
     const lines = [
@@ -31,29 +35,75 @@ const Game9x9 = () => {
   };
 
   const handleClick = (boardIndex, squareIndex) => {
-    // Si ya hay un ganado en el MiniBoard, no se puede jugar en ese tablero
-    if (gameState.winners[boardIndex] || gameState.boards[boardIndex][squareIndex]) return;
+    setGameState((prevState) => {
+      if (prevState.winners[boardIndex] || prevState.boards[boardIndex][squareIndex]) return prevState;
 
-    const newBoards = gameState.boards.map((board, idx) =>
-      idx === boardIndex
-        ? board.map((square, i) => (i === squareIndex ? (gameState.xIsNext ? 'X' : 'O') : square))
-        : board
-    );
+      if(checkWinner(prevState.winners)) return prevState;
+  
+      const newBoards = prevState.boards.map((board, idx) =>
+        idx === boardIndex
+          ? board.map((square, i) => (i === squareIndex ? (prevState.xIsNext ? 'X' : 'O') : square))
+          : board
+      );
+  
+      const newWinners = [...prevState.winners];
+      const winner = checkWinner(newBoards[boardIndex]);
+  
+      const newScore = { ...prevState.score };
+  
+      if (winner && !prevState.winners[boardIndex]) {
+        newWinners[boardIndex] = winner;
+        newScore[winner] += 1;
+      }
 
-    // Verificar ganador en el MiniBoard
-    const newWinners = [...gameState.winners];
-    newWinners[boardIndex] = checkWinner(newBoards[boardIndex]);
+      // Verificar ganador global
+      const globalWinner = checkWinner(newWinners);
+      if (globalWinner) {
+        setWinnerMessage(isSinglePlayer 
+          ? (globalWinner === 'X' ? "¡Victoria!" : "Derrota") 
+          : `¡Ganador: ${globalWinner === 'X' ? 'Jugador 1' : 'Jugador 2'}!`);
+      } else {
+        // Verificar si todos los mini-tableros están llenos y no hay ganador global
+        const allBoardsFilled = newWinners.every((winner, index) => {
+          // Verificar si cada mini-tablero está lleno (no tiene casillas vacías) o ya tiene un ganador
+          return winner !== null || !newBoards[index].includes(null);
+        });
 
-    // Actualizar el estado
-    setGameState({
-      ...gameState,
-      boards: newBoards,
-      winners: newWinners,
-      xIsNext: !gameState.xIsNext,
-      currentBoard: gameState.winners[squareIndex] ? null : squareIndex,
+        if (allBoardsFilled) {
+          setWinnerMessage("¡Empate!");
+        }
+      }
+    
+      return {
+        ...prevState,
+        boards: newBoards,
+        winners: newWinners,
+        xIsNext: !prevState.xIsNext,
+        currentBoard: winner ? null : squareIndex,
+        score: newScore,
+      };
     });
   };
 
+  // Función IA move
+  const aiMove = async () => {
+    try{
+      const response = await axios.post('http://localhost:8000/game9x9/ai_move/', gameState);
+      const aiMove = response.data;
+      if (aiMove.boardIndex !== undefined && aiMove.squareIndex !== undefined) {
+        handleClick(aiMove.boardIndex, aiMove.squareIndex);
+      }
+    } catch (error) {
+      console.log('Error al obtener el movimiento de la IA: ', error);
+    }
+  };
+
+  useEffect(() => {
+    if (isSinglePlayer && !gameState.xIsNext) {
+      aiMove();
+    }
+  }, [gameState, isSinglePlayer]);
+  
   // Función para 1 o 2 jugadores
   const togglePlayers = () => {
     setIsSinglePlayer(!isSinglePlayer);
@@ -66,7 +116,9 @@ const Game9x9 = () => {
       winners: Array(9).fill(null),
       xIsNext: true,
       currentBoard: null,
+      score: {X: 0 , O: 0},
     });
+    setWinnerMessage(null);
   };
 
   const getGameStatus = () => {
@@ -87,6 +139,19 @@ const Game9x9 = () => {
         onReset={resetGame} 
       />
       <Board boards={gameState.boards} winners={gameState.winners} onMove={handleClick} />
+      <ScoreBoard
+        isSinglePlayer={isSinglePlayer}
+        scoreX = {gameState.score.X}
+        scoreO = {gameState.score.O}
+      />
+      {winnerMessage && (
+        <div className="popup">
+          <div className="popup-content">
+            <h2>{winnerMessage}</h2>
+            <button onClick={resetGame}>Reiniciar</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

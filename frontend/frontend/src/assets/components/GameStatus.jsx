@@ -11,9 +11,9 @@ const GameStatus = ({ status, isSinglePlayer, onTogglePlayers, onReset }) => {
         <div className="player-selection" onClick={onTogglePlayers}>
           <img
             src={isSinglePlayer ? PlayerOne : PlayerTwo}
-            alt={isSinglePlayer ? "1 Jugador" : "2 Jugadores"}
+            alt={isSinglePlayer ? "1" : "2"}
           />
-          <span>{isSinglePlayer ? "1 Jugador" : "2 Jugadores"}</span>
+          <span>{isSinglePlayer ? "1" : "2"}</span>
         </div>
         <button className="reset-button" onClick={onReset}>
           <img src={Reset} alt="Reset Game" />

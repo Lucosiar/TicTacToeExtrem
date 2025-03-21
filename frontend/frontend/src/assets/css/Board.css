@@ -20,34 +20,30 @@
 /* MiniBoard.jsx */
 .mini-board {
   display: flex;
-  flex-direction: column;
+  justify-content: center;
+  align-items: center;
   border: 1px solid black;
   background: white;
   width: 180px;
   height: 180px;
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  overflow: hidden;
 }
 
-.board-row {
-  display: flex;
-}
-
-.overlay{
+.overlay {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
-  height: 90%;
-  /*background-color: #fc5800;*/
+  height: 100%;
+  background-color: rgba(252, 88, 0, 0.17);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 200px;
+  font-size: 150px; /* Ajusta el tamaño de la fuente */
   font-weight: bold;
+  line-height: 1; /* Asegura que el texto se centre verticalmente */
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* Añade sombra para mejorar la visibilidad */
 }
 
 
@@ -69,4 +65,34 @@
 
 .square:hover {
   background: #0d00ff;
+}
+
+/* Pop up*/
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-content {
+  background: rgb(42, 42, 42);
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+}
+
+.popup button {
+  margin-top: 10px;
+  padding: 10px;
+  background: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
 }

@@ -16,6 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from game9x9.views import ai_move
 
 urlpatterns = [
     path('admin/', admin.site.urls),

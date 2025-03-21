@@ -1,0 +1,35 @@
+.score-board {
+    background: transparent;
+    border-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    
+    width: 300px;
+    margin-bottom: 20px;
+  }
+  
+  .score-title {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .score-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .score {
+    display: flex;
+    flex-direction: column;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  .vs {
+    font-size: 18px;
+    font-weight: bold;
+    color: #fc5800;
+  }
+  
