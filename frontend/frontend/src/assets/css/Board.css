@@ -19,15 +19,24 @@
 
 /* MiniBoard.jsx */
 .mini-board {
+  background-color: aquamarine;
   display: flex;
   justify-content: center;
   align-items: center;
   border: 1px solid black;
-  background: white;
   width: 180px;
   height: 180px;
   position: relative;
   overflow: hidden;
+}
+
+.mini-board.active {
+  background: #ffcccc;
+}
+
+.mini-board.disabled {
+  opacity: 0.7;
+  pointer-events: none;
 }
 
 .overlay {
@@ -65,6 +74,11 @@
 
 .square:hover {
   background: #0d00ff;
+}
+
+.square.hovered {
+  background-color: rgba(255, 0, 0, 0.3);
+  cursor: pointer;
 }
 
 /* Pop up*/

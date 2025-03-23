@@ -36,6 +36,8 @@ const Game9x9 = () => {
 
   const handleClick = (boardIndex, squareIndex) => {
     setGameState((prevState) => {
+      if (prevState.currentBoard !== null && prevState.currentBoard !== boardIndex) return prevState;
+    
       if (prevState.winners[boardIndex] || prevState.boards[boardIndex][squareIndex]) return prevState;
 
       if(checkWinner(prevState.winners)) return prevState;
@@ -48,7 +50,6 @@ const Game9x9 = () => {
   
       const newWinners = [...prevState.winners];
       const winner = checkWinner(newBoards[boardIndex]);
-  
       const newScore = { ...prevState.score };
   
       if (winner && !prevState.winners[boardIndex]) {
@@ -73,13 +74,21 @@ const Game9x9 = () => {
           setWinnerMessage("¡Empate!");
         }
       }
+
+      // Determinar el minitablero del siguiente turno
+      let nextBoard = squareIndex;
+      if (newWinners[nextBoard]) {
+        // Si el mintablero está ganado / lleno, el jugador puede elegir cualquier minitablero
+        nextBoard = null;
+      }
     
       return {
         ...prevState,
         boards: newBoards,
         winners: newWinners,
         xIsNext: !prevState.xIsNext,
-        currentBoard: winner ? null : squareIndex,
+        //currentBoard: winner ? null : squareIndex,
+        currentBoard: nextBoard,
         score: newScore,
       };
     });
@@ -88,11 +97,19 @@ const Game9x9 = () => {
   // Función IA move
   const aiMove = async () => {
     try{
-      const response = await axios.post('http://localhost:8000/game9x9/ai_move/', gameState);
+      const response = await axios.post('http://localhost:8000/game9x9/ai_move/', {
+      ...gameState,
+      currentBoard: gameState.currentBoard,
+      });
+
       const aiMove = response.data;
+
       if (aiMove.boardIndex !== undefined && aiMove.squareIndex !== undefined) {
-        handleClick(aiMove.boardIndex, aiMove.squareIndex);
+        setTimeout(() => {
+          handleClick(aiMove.boardIndex, aiMove.squareIndex);
+        }, 1000);
       }
+
     } catch (error) {
       console.log('Error al obtener el movimiento de la IA: ', error);
     }
@@ -138,7 +155,12 @@ const Game9x9 = () => {
         onTogglePlayers={togglePlayers} 
         onReset={resetGame} 
       />
-      <Board boards={gameState.boards} winners={gameState.winners} onMove={handleClick} />
+      <Board 
+        boards={gameState.boards} 
+        winners={gameState.winners} 
+        onMove={handleClick} 
+        currentBoard={gameState.currentBoard} 
+      />
       <ScoreBoard
         isSinglePlayer={isSinglePlayer}
         scoreX = {gameState.score.X}

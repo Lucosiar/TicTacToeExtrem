@@ -1,10 +1,15 @@
 import React from 'react';
 import '../css/Board.css';
 
-const Square = ({ value, onClick }) => {
+const Square = ({ value, onClick, onMouseEnter, onMouseLeave, hovered }) => {
   return (
-    <button className="square" onClick={onClick}>
-      {value}
+    <button
+      className={`square ${hovered ? 'hovered' : ''}`}
+      onClick={onClick}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
+      {value || (hovered ? '◉' : '')}
     </button>
   );
 };
