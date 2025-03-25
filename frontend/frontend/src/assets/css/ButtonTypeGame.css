@@ -4,7 +4,7 @@
     align-items: center;
     justify-content: center;
     border: none;
-    background-color: #007bff;
+    background-color: #FC581B;
     padding: 10px 20px;
     border-radius: 30px;
     cursor: pointer;
@@ -12,14 +12,14 @@
   }
   
   .game-button:hover {
-    background-color: #0056b3;
+    background-color: #ae99fc;
   }
   
   .game-button-image {
     width: 40px;
     height: 40px;
     margin-right: 10px;
-    border-radius: 50%;
+    border-radius: 20%;
   }
   
   .game-button-title {

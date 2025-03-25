@@ -1,6 +1,6 @@
 import Square from "./Square";
 import React from 'react';
-import '../css/Board.css';
+import '../../css/game9x9/Board.css';
 
 const MiniBoard = ({ squares, onSquareClick, winner, isActive, handleMouseEnter, handleMouseLeave }) => {
   return (

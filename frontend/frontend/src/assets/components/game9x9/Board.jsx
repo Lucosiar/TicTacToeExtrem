@@ -1,6 +1,6 @@
 import React, { useState  } from 'react';
 import MiniBoard from './MiniBoard';
-import '../css/Board.css';
+import '../../css/game9x9/Board.css';
 
 const Board = ({ boards, winners, onMove, currentBoard, isSinglePlayer  }) => {
 
@@ -23,8 +23,6 @@ const Board = ({ boards, winners, onMove, currentBoard, isSinglePlayer  }) => {
   const isSquareDisabled = (boardIndex, squareIndex) => {
     return (isSinglePlayer && !gameState.xIsNext) || winners[boardIndex] || boards[boardIndex][squareIndex];
   };
-
-  console.log("📌 Board recibió nuevos boards:", JSON.stringify(boards));
 
   return (
     <div className="board">

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/ScoreBoard.css';
+import '../../css/game9x9/ScoreBoard.css';
 
 const ScoreBoard = ({ isSinglePlayer, scoreX, scoreO,  }) => {
   return (

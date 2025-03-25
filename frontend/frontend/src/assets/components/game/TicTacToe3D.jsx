@@ -1,7 +1,7 @@
 // src/assets/components/TicTacToe3D.jsx
 import React, { useRef, useEffect } from 'react';
 import * as THREE from 'three';
-import '../css/TicTacToe3D.css'; 
+import '../../css/TicTacToe3D.css'; 
 
 const TicTacToe3D = () => {
   const mountRef = useRef(null);

@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/Board.css';
+import '../../css/game9x9/Board.css';
 
 const Square = ({ value, onClick, onMouseEnter, onMouseLeave, hovered }) => {
   return (

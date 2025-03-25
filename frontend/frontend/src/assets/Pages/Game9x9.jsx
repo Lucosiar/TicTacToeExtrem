@@ -1,11 +1,15 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import Board from '../components/Board';
-import GameStatus from '../components/GameStatus';
-import ScoreBoard from '../components/ScoreBoard';
-import '../css/Board.css';
+import Board from '../components/game9x9/Board';
+import GameStatus from '../components/game9x9/GameStatus';
+import ScoreBoard from '../components/game9x9/ScoreBoard';
+import '../css/game9x9/Board.css';
+import RulesIcon from '../img/reglas.png';
 
 const Game9x9 = () => {
+  const navigate = useNavigate();
+
   const [gameState, setGameState] = useState({
     // 9 mini-tableros de 9 casillas
     boards: Array(9).fill(null).map(() => Array(9).fill(null)),
@@ -36,14 +40,6 @@ const Game9x9 = () => {
   };
 
   const handleClick = (boardIndex, squareIndex, isAI = false) => {
-    console.log("movimiento realizado", boardIndex, squareIndex);
-    console.log("isAI", isAI);
-
-    // Si es el turno de la IA, no permitir que el jugador haga clic
-    if (!isAI && gameState.xIsNext === false && isSinglePlayer) {
-      console.log('⛔ Es turno de la IA, evitando movimiento del jugador');
-      return;
-    }
 
     setGameState((prevState) => {
       if (prevState.currentBoard !== null && prevState.currentBoard !== boardIndex) return prevState;
@@ -58,8 +54,6 @@ const Game9x9 = () => {
           : board
       );
 
-      console.log("🔄 Tablero actualizado dentro de setGameState:", JSON.stringify(newBoards));
-  
       const newWinners = [...prevState.winners];
       const winner = checkWinner(newBoards[boardIndex]);
       const newScore = { ...prevState.score };
@@ -120,8 +114,6 @@ const Game9x9 = () => {
         difficulty: difficulty,
         });
 
-        console.log("Respuesta ia", response.data);
-
         const aiMove = response.data;
 
         if (aiMove.boardIndex !== undefined && aiMove.squareIndex !== undefined) {
@@ -131,7 +123,7 @@ const Game9x9 = () => {
         }
       }
     } catch (error) {
-      console.log('Error al obtener el movimiento de la IA: ', error);
+      window.alert("Error al obtener el movimiento de la IA");
     }
   };
 
@@ -170,8 +162,13 @@ const Game9x9 = () => {
 
   return (
     <div className="game">
-      <div>
-        <h3>Ultimate Tic Tac Toe</h3>
+      <div className='game-title'>
+        <img 
+          src={RulesIcon} 
+          alt="Reglas" 
+          className="rules-icon" 
+          onClick={() => navigate('/rules9x9')} 
+        />
       </div>
       <GameStatus 
         status={getGameStatus()} 

@@ -1,0 +1,12 @@
+.rules-container{
+    height: 90vh;
+    padding: 20px;
+    gap: 20px;
+}
+
+.play-button{
+    background-color: orange;
+    font-size: 20px;
+    padding: 10px 20px;
+    border-radius: 20%;
+}
