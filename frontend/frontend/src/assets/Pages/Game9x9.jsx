@@ -18,6 +18,7 @@ const Game9x9 = () => {
   });
 
   const [isSinglePlayer, setIsSinglePlayer] = useState(true);
+  const [difficulty, setDifficulty] = useState('easy');
   const [winnerMessage, setWinnerMessage] = useState(null);
 
   const checkWinner = (squares) => {
@@ -34,7 +35,16 @@ const Game9x9 = () => {
     return null;
   };
 
-  const handleClick = (boardIndex, squareIndex) => {
+  const handleClick = (boardIndex, squareIndex, isAI = false) => {
+    console.log("movimiento realizado", boardIndex, squareIndex);
+    console.log("isAI", isAI);
+
+    // Si es el turno de la IA, no permitir que el jugador haga clic
+    if (!isAI && gameState.xIsNext === false && isSinglePlayer) {
+      console.log('⛔ Es turno de la IA, evitando movimiento del jugador');
+      return;
+    }
+
     setGameState((prevState) => {
       if (prevState.currentBoard !== null && prevState.currentBoard !== boardIndex) return prevState;
     
@@ -47,6 +57,8 @@ const Game9x9 = () => {
           ? board.map((square, i) => (i === squareIndex ? (prevState.xIsNext ? 'X' : 'O') : square))
           : board
       );
+
+      console.log("🔄 Tablero actualizado dentro de setGameState:", JSON.stringify(newBoards));
   
       const newWinners = [...prevState.winners];
       const winner = checkWinner(newBoards[boardIndex]);
@@ -97,19 +109,27 @@ const Game9x9 = () => {
   // Función IA move
   const aiMove = async () => {
     try{
-      const response = await axios.post('http://localhost:8000/game9x9/ai_move/', {
-      ...gameState,
-      currentBoard: gameState.currentBoard,
-      });
 
-      const aiMove = response.data;
+      const globalWinner = checkWinner(gameState.winners);
+      if (globalWinner) return;
 
-      if (aiMove.boardIndex !== undefined && aiMove.squareIndex !== undefined) {
-        setTimeout(() => {
-          handleClick(aiMove.boardIndex, aiMove.squareIndex);
-        }, 1000);
+      if (!gameState.xIsNext && isSinglePlayer) {
+        const response = await axios.post('http://localhost:8000/game9x9/ai_move/', {
+        ...gameState,
+        currentBoard: gameState.currentBoard,
+        difficulty: difficulty,
+        });
+
+        console.log("Respuesta ia", response.data);
+
+        const aiMove = response.data;
+
+        if (aiMove.boardIndex !== undefined && aiMove.squareIndex !== undefined) {
+          setTimeout(() => {
+            handleClick(aiMove.boardIndex, aiMove.squareIndex, true);
+          }, 1000);
+        }
       }
-
     } catch (error) {
       console.log('Error al obtener el movimiento de la IA: ', error);
     }
@@ -119,11 +139,15 @@ const Game9x9 = () => {
     if (isSinglePlayer && !gameState.xIsNext) {
       aiMove();
     }
-  }, [gameState, isSinglePlayer]);
+  }, [gameState.xIsNext, isSinglePlayer, difficulty]);
   
   // Función para 1 o 2 jugadores
   const togglePlayers = () => {
     setIsSinglePlayer(!isSinglePlayer);
+  };
+
+  const toggleDifficulty = () => {
+    setDifficulty(difficulty === 'easy' ? 'hard' : 'easy');
   };
 
   // Función para resetear
@@ -154,6 +178,8 @@ const Game9x9 = () => {
         isSinglePlayer={isSinglePlayer} 
         onTogglePlayers={togglePlayers} 
         onReset={resetGame} 
+        difficulty={difficulty}
+        onToggleDifficulty={toggleDifficulty}
       />
       <Board 
         boards={gameState.boards} 

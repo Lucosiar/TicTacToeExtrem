@@ -30,6 +30,35 @@ def find_best_move(board, player):
 
     return None
 
+def minimax(board, depth, maximizing_player, player, opponent):
+    """Algoritmo Minimax para determinar el mejor movimiento para la IA."""
+    winner = check_winner(board)
+    if winner == player:
+        return 1
+    elif winner == opponent:
+        return -1
+    elif all(square is not None for square in board):
+        return 0  # Empate
+    
+    if maximizing_player:
+        best_score = -float('inf')
+        for i in range(9):
+            if board[i] is None:
+                board[i] = player
+                score = minimax(board, depth + 1, False, player, opponent)
+                board[i] = None
+                best_score = max(score, best_score)
+        return best_score
+    else:
+        best_score = float('inf')
+        for i in range(9):
+            if board[i] is None:
+                board[i] = opponent
+                score = minimax(board, depth + 1, True, player, opponent)
+                board[i] = None
+                best_score = min(score, best_score)
+        return best_score
+
 @api_view(['POST'])
 def ai_move(request):
     game_state = request.data
@@ -39,40 +68,72 @@ def ai_move(request):
     current_board = game_state['currentBoard']
     ai_player = 'O' if x_is_next else 'X'
     opponent = 'X' if ai_player == 'O' else 'O'
+    difficulty = game_state['difficulty']  # Tomamos la dificultad desde el frontend
 
-    # 1. Jugar en el mini-tablero correcto si es posible
+    # Si la dificultad es 'hard', usamos Minimax para determinar el mejor movimiento
+    if difficulty == 'hard':
+        # Si el mini-tablero asignado está vacío, se evalúan todos los movimientos posibles
+        if current_board is not None and winners[current_board] is None:
+            best_move = None
+            best_score = -float('inf')
+
+            for i in range(9):
+                if boards[current_board][i] is None:
+                    boards[current_board][i] = ai_player
+                    score = minimax(boards[current_board], 0, False, ai_player, opponent)
+                    boards[current_board][i] = None
+                    if score > best_score:
+                        best_score = score
+                        best_move = i
+
+            if best_move is not None:
+                return Response({'boardIndex': current_board, 'squareIndex': best_move})
+
+        # Si el mini-tablero asignado está lleno o ganado, jugar en cualquier otro disponible
+        valid_boards = [i for i in range(9) if winners[i] is None]
+        if valid_boards:
+            chosen_board = random.choice(valid_boards)
+            best_move = None
+            best_score = -float('inf')
+
+            for i in range(9):
+                if boards[chosen_board][i] is None:
+                    boards[chosen_board][i] = ai_player
+                    score = minimax(boards[chosen_board], 0, False, ai_player, opponent)
+                    boards[chosen_board][i] = None
+                    if score > best_score:
+                        best_score = score
+                        best_move = i
+
+            if best_move is not None:
+                return Response({'boardIndex': chosen_board, 'squareIndex': best_move})
+
+    # Si la dificultad es 'easy' o no se seleccionó un movimiento complicado, hacemos un movimiento aleatorio
     if current_board is not None and winners[current_board] is None:
-        # 1.1 Intentar ganar en este mini-tablero
         best_move = find_best_move(boards[current_board], ai_player)
         if best_move is not None:
             return Response({'boardIndex': current_board, 'squareIndex': best_move})
 
-        # 1.2 Bloquear al oponente si está por ganar
         best_move = find_best_move(boards[current_board], opponent)
         if best_move is not None:
             return Response({'boardIndex': current_board, 'squareIndex': best_move})
 
-        # 1.3 Si no hay movimiento inmediato de ganar o bloquear, elegir una casilla vacía en este mini-tablero
         available_moves = [i for i, square in enumerate(boards[current_board]) if square is None]
         if available_moves:
             return Response({'boardIndex': current_board, 'squareIndex': random.choice(available_moves)})
 
-    # 2. Si el mini-tablero asignado está lleno o ganado, jugar en cualquier otro disponible
+    # Si el mini-tablero asignado está lleno o ganado, jugar en cualquier otro disponible
     valid_boards = [i for i in range(9) if winners[i] is None]
     if valid_boards:
         chosen_board = random.choice(valid_boards)
-        
-        # 2.1 Intentar ganar en el mini-tablero elegido
         best_move = find_best_move(boards[chosen_board], ai_player)
         if best_move is not None:
             return Response({'boardIndex': chosen_board, 'squareIndex': best_move})
 
-        # 2.2 Bloquear al oponente si está por ganar
         best_move = find_best_move(boards[chosen_board], opponent)
         if best_move is not None:
             return Response({'boardIndex': chosen_board, 'squareIndex': best_move})
 
-        # 2.3 Si no hay movimiento inmediato de ganar o bloquear, elegir una casilla vacía en este mini-tablero
         available_moves = [i for i, square in enumerate(boards[chosen_board]) if square is None]
         if available_moves:
             return Response({'boardIndex': chosen_board, 'squareIndex': random.choice(available_moves)})

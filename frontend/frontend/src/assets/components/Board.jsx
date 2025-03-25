@@ -2,7 +2,7 @@ import React, { useState  } from 'react';
 import MiniBoard from './MiniBoard';
 import '../css/Board.css';
 
-const Board = ({ boards, winners, onMove, currentBoard }) => {
+const Board = ({ boards, winners, onMove, currentBoard, isSinglePlayer  }) => {
 
   const [hoveredSquare, setHoveredSquare] = useState(null);
 
@@ -20,6 +20,12 @@ const Board = ({ boards, winners, onMove, currentBoard }) => {
     setHoveredSquare(null);
   };
 
+  const isSquareDisabled = (boardIndex, squareIndex) => {
+    return (isSinglePlayer && !gameState.xIsNext) || winners[boardIndex] || boards[boardIndex][squareIndex];
+  };
+
+  console.log("📌 Board recibió nuevos boards:", JSON.stringify(boards));
+
   return (
     <div className="board">
       {[0, 1, 2].map((row) => (
@@ -35,6 +41,7 @@ const Board = ({ boards, winners, onMove, currentBoard }) => {
                 isActive={currentBoard === null || currentBoard === boardIndex}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseLeave={handleMouseLeave}
+                disabled={isSquareDisabled(boardIndex, col)}
               />
             );
           })}
