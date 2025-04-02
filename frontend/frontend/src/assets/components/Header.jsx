@@ -16,7 +16,7 @@ const Header = () => {
                 <li><Link to="/game9x9">Ultimate Tic Tac Toe</Link></li>
                 <li><Link to="/game1">3D Tic Tac Toe</Link></li>
                 {/* Para las normas tendré que crear una página que rediriga a las normas de varios juegos: https://tictactoefree.com/es/todas-las-reglas*/}
-                <li><Link to="/rules9x9">Reglas</Link></li>
+                <li><Link to="/fullrules">Reglas</Link></li>
             </ul>
         </nav>
     </header>

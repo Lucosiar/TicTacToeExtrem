@@ -21,4 +21,5 @@ from game9x9.views import ai_move
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('game9x9/', include('game9x9.urls')),
+    #path('game3d/', include('game3d.urls')),
 ]
