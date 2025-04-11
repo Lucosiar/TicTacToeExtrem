@@ -20,11 +20,10 @@
 
 /* Board.jsx */
 .board {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   width: fit-content;
-  margin-top: 10px;
-  max-width: 546px;
+  margin: auto;
 }
 
 /* MiniBoard.jsx */

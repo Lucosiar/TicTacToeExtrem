@@ -21,7 +21,7 @@ const Board = ({ boards, winners, onMove, currentBoard, isSinglePlayer  }) => {
   };
 
   const isSquareDisabled = (boardIndex, squareIndex) => {
-    return (isSinglePlayer && !gameState.xIsNext) || winners[boardIndex] || boards[boardIndex][squareIndex];
+    return isSinglePlayer || winners[boardIndex] || boards[boardIndex][squareIndex];
   };
 
   return (
@@ -39,7 +39,7 @@ const Board = ({ boards, winners, onMove, currentBoard, isSinglePlayer  }) => {
                 isActive={currentBoard === null || currentBoard === boardIndex}
                 handleMouseEnter={handleMouseEnter}
                 handleMouseLeave={handleMouseLeave}
-                disabled={isSquareDisabled(boardIndex, col)}
+                //disabled={isSquareDisabled(boardIndex, col)}
               />
             );
           })}

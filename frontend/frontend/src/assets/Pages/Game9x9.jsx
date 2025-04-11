@@ -5,7 +5,7 @@ import Board from '../components/game9x9/Board';
 import GameStatus from '../components/game9x9/GameStatus';
 import ScoreBoard from '../components/game9x9/ScoreBoard';
 import '../css/game9x9/Board.css';
-import RulesIcon from '../img/reglas.png';
+import RulesIcon from '/img/reglas.png';
 
 const Game9x9 = () => {
   const navigate = useNavigate();

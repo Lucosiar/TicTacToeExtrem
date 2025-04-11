@@ -25,12 +25,12 @@ const GameSelection = () => {
       <h2>Selecciona el tipo de juego que quieres jugar</h2>
       <div className="game-selection">
         <ButtonTypeGame
-          imageSrc="./src/assets/img/tictactoe9x9.png"
+          imageSrc="/img/tictactoe9x9.png"
           title="3D"
           onClick={() => handleGameSelection("game1")}
         />
         <ButtonTypeGame
-          imageSrc="./src/assets/img/prueba.jpeg"
+          imageSrc="./img/prueba.jpeg"
           title="Ultimate"
           onClick={() => handleGameSelection("game2")}
         />

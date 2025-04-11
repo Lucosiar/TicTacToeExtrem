@@ -1,7 +1,7 @@
 import React from 'react';
-import PlayerOne from '../../img/1jugador.png';
-import PlayerTwo from '../../img/2jugadores.png';
-import Reset from '../../img/reiniciar.png';
+import PlayerOne from '/img/1jugador.png';
+import PlayerTwo from '/img/2jugadores.png';
+import Reset from '/img/reiniciar.png';
 import '../../css/game9x9/GameStatus.css';
 
 const GameStatus = ({ status, isSinglePlayer, onTogglePlayers, onReset, difficulty, onToggleDifficulty }) => {
