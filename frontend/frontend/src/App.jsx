@@ -51,7 +51,7 @@ const App = () => {
         <Route path='/fullrules' element={<FullRules />} />
       </Routes>
       <footer className='footer'>
-        &copy; 2025 Lucosiar&reg;
+        &copy; 2025 Lucosiar
       </footer>
     </BrowserRouter>
     

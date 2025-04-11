@@ -8,7 +8,7 @@ const Header = () => {
         <nav>
             <ul>
                 <li className='logo_nombre'>
-                    <a href="https://lucosiar.pythonanywhere.com/" target="_blank" rel="noopener noreferrer">
+                    <a href="https://lucosiar.es/" target="_blank" rel="noopener noreferrer">
                     <img rel="icon" src="/src/assets/img/serpienteMorada.ico" alt="Lucosiar Logo" className='logo' />
                     </a>
                 </li>
