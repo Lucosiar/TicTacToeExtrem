@@ -1,0 +1,50 @@
+.switch-container {
+    position: relative;
+    width: 44px;
+    height: 24px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: background-image 0.3s;
+}
+  
+  
+.switch-container.bg-spain-flag {
+    background-image: url('/img/idiomas/spain.jpg');
+    background-size: cover;
+}
+  
+.switch-container.bg-uk-flag {
+    background-image: url('/img/idiomas/reino_unido.jpg');
+    background-size: cover;
+}
+  
+.switch-circle {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: transform 0.3s;
+}
+  
+.switch-container.bg-spain-flag .switch-circle {
+    transform: translateX(20px);
+}
+  
+.switch-container.bg-uk-flag .switch-circle {
+    transform: translateX(0px);
+}
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+ }

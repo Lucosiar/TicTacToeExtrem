@@ -2,30 +2,45 @@
 .game-button {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   border: none;
   background-color: #FC581B;
-  padding: 10px 20px;
-  border-radius: 30px;
+  padding: 20px;
+  border-radius: 20px;
   cursor: pointer;
   transition: all 0.3s ease;
+  width: 100%;
+  max-width: 600px;
+  text-align: left;
+  gap: 20px;
 }
-  
+
 .game-button:hover {
   background-color: #ae99fc;
 }
-  
+
 .game-button-image {
-  width: 40px;
-  height: 40px;
-  margin-right: 10px;
-  border-radius: 20%;
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 12px;
 }
-  
-.game-button-title {
+
+.game-button-text {
+  display: flex;
+  flex-direction: column;
   color: white;
-  font-size: 16px;
+}
+
+.game-button-title {
+  font-size: 24px;
   font-weight: bold;
+}
+
+.game-button-description {
+  font-size: 16px;
+  margin-top: 8px;
+  margin-bottom: 0;
 }
 
 
@@ -69,15 +84,3 @@
   transform: scale(1.05);
 }
 
-.game-button-image {
-  width: 120px;
-  height: 120px;
-  margin-bottom: 10px;
-}
-
-.game-button-title {
-  font-size: 18px;
-  color: white;
-  font-weight: bold;
-  text-align: center;
-}
