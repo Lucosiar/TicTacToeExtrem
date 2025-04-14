@@ -32,7 +32,7 @@ const GameSelection = () => {
       <p className='subtitle'>{t("descripcionInicio")}</p>
       <div className="game-selection">
         <ButtonTypeGame
-          imageSrc="/img/tictactoe9x9.png"
+          imageSrc="/img/3dtictactoe.png"
           title="3D TicTacToe"
           description={t("descripcion3D")}
           onClick={() => handleGameSelection("game1")}

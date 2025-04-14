@@ -162,7 +162,7 @@ const Game9x9 = () => {
 
   return (
     <div className="game">
-      <div className='game-title'>
+      <div>
         <img 
           src={RulesIcon} 
           alt="Reglas" 
@@ -170,33 +170,35 @@ const Game9x9 = () => {
           onClick={() => navigate('/rules9x9')} 
         />
       </div>
-      <GameStatus 
-        status={getGameStatus()} 
-        isSinglePlayer={isSinglePlayer} 
-        onTogglePlayers={togglePlayers} 
-        onReset={resetGame} 
-        difficulty={difficulty}
-        onToggleDifficulty={toggleDifficulty}
-      />
-      <Board 
-        boards={gameState.boards} 
-        winners={gameState.winners} 
-        onMove={handleClick} 
-        currentBoard={gameState.currentBoard} 
-      />
-      <ScoreBoard
-        isSinglePlayer={isSinglePlayer}
-        scoreX = {gameState.score.X}
-        scoreO = {gameState.score.O}
-      />
+      <div className="game-layout">
+        <GameStatus 
+          status={getGameStatus()} 
+          isSinglePlayer={isSinglePlayer} 
+          onTogglePlayers={togglePlayers} 
+          onReset={resetGame} 
+          difficulty={difficulty}
+          onToggleDifficulty={toggleDifficulty}
+        />
+        <Board 
+          boards={gameState.boards} 
+          winners={gameState.winners} 
+          onMove={handleClick} 
+          currentBoard={gameState.currentBoard} 
+        />
+        <ScoreBoard
+          isSinglePlayer={isSinglePlayer}
+          scoreX = {gameState.score.X}
+          scoreO = {gameState.score.O}
+        />
+      </div>
       {winnerMessage && (
-        <div className="popup">
-          <div className="popup-content">
-            <h2>{winnerMessage}</h2>
-            <button onClick={resetGame}>Reiniciar</button>
+          <div className="popup">
+            <div className="popup-content">
+              <h2>{winnerMessage}</h2>
+              <button onClick={resetGame}>Reiniciar</button>
+            </div>
           </div>
-        </div>
-      )}
+        )}
     </div>
   );
 };
